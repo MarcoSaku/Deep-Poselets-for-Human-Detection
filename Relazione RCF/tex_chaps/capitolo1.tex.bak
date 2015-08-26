@@ -1,0 +1,71 @@
+\def\baselinestretch{1}
+\chapter{Teoria} \label{cap1}
+\def\baselinestretch{1.66}
+%\section{Sommario}\label{sec:1a}
+In questo capitolo viene introdotta la parte teorica. Un esempio può essere: \\
+Introduciamo ora alcuni concetti e terminologie fondamentali che
+verranno utilizzati, in seguito, all'interno di questo elaborato.
+In questo capitolo si vogliono fornire le basi, nell'ambito
+dell'elaborazione dei segnali audio, propedeutiche ed
+indispensabili per la comprensione dei capitoli successivi $\ldots$
+
+
+
+\section{Installazione}
+Per poter scrivere una tesina in latex è possibile lavorare sotto
+\begin{itemize}
+  \item linux
+    \begin{enumerate}
+      \item Per scrivere il testo è possibile usare qualsiasi editor. Il compilatore è previsto nell'installazione base. Da linea di comando si può compilare usando il comando ``tex''. 
+      \item Se si vuole usare un editor che si collega direttamente al compilatore è possibile installare il programma {\bf Kile } (\url{http://kile.sourceforge.net/})
+    \end{enumerate}
+  \item Windows
+   \begin{enumerate}
+      \item Scaricare ed installare il compilatore {\bf MikTex} (\url{http://miktex.org/})
+      \item Scaricare ed installare {\bf ghostview} per leggere i file ``.ps'' (\url{http://pages.cs.wisc.edu/~ghost/})
+      \item Scaricare ed installare {\bf Acrobat Reader} per leggere i file ``.pdf''(\url{http://www.adobe.com/it/products/acrobat/readstep2.html})
+      \item Scaricare ed installare un editor ad esempio {\bf WinEdt} (non è free) (\url{http://www.winedt.com/}) o ad esempio 
+      {\bf WinTex} (\url{http://www.tex-tools.de/cms/})
+    \end{enumerate}
+\end{itemize}
+
+
+\section{Compilazione}
+Per la compilazione si può procedere in uno dei seguenti modi
+ \begin{enumerate}
+      \item {\bf latex} $\Rightarrow$ {\bf dvi2ps} $\Rightarrow$ {\bf ps2pdf}    
+      \item {\bf latex} $\Rightarrow$ {\bf dvi2pdf} 
+      \item {\bf pdf2latex} ({\it consigliato nel caso di utilizzo di immagini del tipo .png})      
+ \end{enumerate}
+ 
+ {\bf N.B.} \begin{itemize}
+              \item se si vuole compilare questo template usare pdf2latex.
+              \item nel caso di utilizzo dell'editor pdf2latex, ps2pdf, dvi2ps e dvi2pdf sono descritti da icone sulla parte alta dell'editor. 
+            \end{itemize}
+ 
+
+\section{Formule e immagini}
+In questa sessione vengono introdotti alcuni esempi per l'inserimento di formule e immagini. 
+
+\subsection{Formule nel testo}
+Le formule nel testo vengo scritte in questo modo $z = 3 + x_2 + y^3 + u_{ij}^{3+5x+4}$. 
+Se vogliamo scrivere delle formule con un indice e fare riferimento ad esse possiamo scrivere come nell'equazione
+\ref{equazione_1} o senza numerazione come nell'equazione \ref{equazione_1}
+\begin{equation}\label{equazione_1}
+    \frac{1}{\Delta x} \geq 2W
+\end{equation}
+
+\begin{equation}\label{equazione_2}
+    \frac{1}{\Delta x} \leq 2W
+\end{equation}
+
+\subsection{Immagini}
+Per inserire le immagini si può procedere come nella figura \ref{figura_1} 
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{inviluppo.png}
+\caption{Inviluppi caratteristici di strumenti musicali}
+\label{figura_1}
+\end{figure}
+
+

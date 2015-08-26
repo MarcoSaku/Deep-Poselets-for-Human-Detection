@@ -1,0 +1,38 @@
+\def\baselinestretch{1}
+\chapter{Metodi per l'elaborazione dei segnali} \label{cap2}
+\def\baselinestretch{1.66}
+
+Successivamente vengono proposti alcuni fondamenti teorici per prendere dimistichezza con formula e citazioni.  
+
+\subsection{Periodogramma Classico}
+Si può dimostrare che una definizione alternativa del
+\textbf{Periodogramma Clas\-si\-co} è:
+\\
+\begin{displaymath}
+P_{XX}(f) = \sum_{k=-(N-1)}^{N-1} r_{xx}(k)e^{-j2\pi fk} =
+\frac{1}{N} \left| \sum_{n=0}^{N-1}x(n)e^{-j2\pi fn}\right|^2
+\end{displaymath}
+\\
+\noindent o equivalentemente
+\\
+\begin{equation} \label{eq_2_4} P_{XX}(f) = \frac{1}{N} \left[
+\left(\sum_{n=0}^{N-1} x(n) \cos(2\pi fn)\right)^2 +
+\left(\sum_{n=0}^{N-1} x(n) \sin(2\pi fn)\right)\right]
+\end{equation}
+\\
+\noindent Tale funzione può essere calcolata per ogni valore della
+frequenza. La ca\-rat\-te\-ris\-ti\-ca del \textbf{Periodogramma
+Classico} è la stima delle frequenze del segnale dato un fissato
+intervallo di frequenze. Se il segnale contiene una componente
+sinusoidale di frequenza $f$, allora in corrispondenza di tale
+frequenza i due fattori nella sommatoria $x(n)$ ed $\exp(- j 2 \pi f n)$
+risultano in fase tra loro dando un grande contributo alla somma.
+Invece per altri valori della frequenza i termini della somma sono
+positivi e negativi in modo casuale e la risultante semplificazione
+di tali valori genera un piccolo valore della somma, poiché molti
+termini si annullano \cite{Ciaram_1}\cite{Lombardo}\cite{Uncini}. Quindi la presenza di una sinusoide è indicata
+da un grande valore del Pe\-rio\-do\-gram\-ma in corrispondenza
+della frequenza $f$, cioè da uno stretto, limitato picco nello
+spettro. Di pratico interesse è la stima statistica del
+Periodogramma \cite{Proakis,Lombardo,Uncini}. 
+

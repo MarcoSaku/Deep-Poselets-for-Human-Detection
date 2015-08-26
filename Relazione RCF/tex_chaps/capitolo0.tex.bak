@@ -1,0 +1,5 @@
+\thispagestyle{headings}
+\chapter*{Introduzione} \label{cap0}
+In questa sessione viene inserita l'introduzione al progetto che si va a realizzare. 
+Viene descritto il progetto e la sua proposta di realizzazione. La tesina sostanizialmente contiene 
+tre ulteriori capitoli. Uno per la parte teorica \ref{cap1} e uno sulla parte pratica \ref{cap2} e infine la conclusione \ref{cap3}.    

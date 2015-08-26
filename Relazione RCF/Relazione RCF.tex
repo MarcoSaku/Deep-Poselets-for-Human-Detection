@@ -1,0 +1,126 @@
+
+\documentclass[12pt,italian,a4paper,oneside,openright]{book}
+\usepackage[a4paper,top=0 cm,bottom=4.5 cm,left=3 cm,right=3 cm]{geometry}
+\usepackage{url,amsfonts,epsfig}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+%\usepackage[format=hang,font=footnotesize]{caption}
+\usepackage{vmargin}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{graphicx}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color[rgb]{0,0.6,0},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color[rgb]{0.58,0,0.82},     % string literal style
+}
+
+
+
+%\usepackage{algorithm,algorithmic}
+\graphicspath{{img/}}
+\usepackage[hyperindex]{hyperref} %per l'indice interattivo
+\hypersetup{colorlinks=true, linkcolor=black} %per colorare i link
+%\DeclareGraphicsRule{.jpg}{jpg}{}{} %da commentare per il PDF
+%\DeclareGraphicsRule{.bmp} {bmp}{}{} %da commentare per il PDF
+\setmarginsrb{35mm}{30mm}{30mm}{30mm}{0mm}{10mm}{0mm}{10mm}
+%%\setmarginsrb{1.5cm}{1.5cm}{1,2cm}{1,5cm}{0cm}{2cm}{2cm}{2cm}
+
+\title{Progetto di Riconoscimento e Classificazione di Forme}
+\author{Marco Saviano}
+%\date{14/12/2011}
+
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+%%%% Opzione per interlinea 2
+\baselineskip 1.5em
+
+%% FRONTESPIZIO
+{ \thispagestyle{empty}
+
+
+\vskip 1cm \large \centerline{\textsc{Universita' degli Studi di Napoli ``Parthenope''}}
+
+\centerline {\textsc{Facolta' di Scienze e Tecnologie}}
+
+\centerline {\small\textsc{Corso di laurea in Informatica Applicata}}
+
+\begin{center}
+\includegraphics[scale=0.24]{logo_parthenope}
+\end{center}
+
+\vskip 0.5cm
+
+\large \centerline {\textsc{Progetto di Riconoscimento e Classificazione di Forme}}
+
+\vskip 0.5cm
+
+\Large \centerline {Deep Poselets for Human Detection}
+
+
+\vskip 4.5cm
+
+
+\large
+\begin{minipage}[t]{7cm}
+\textsc{Docente}
+
+Alfredo Petrosino
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{5cm}
+\hfill \textsc{Candidato}
+
+\hfill Marco Saviano
+\hfill 0120000114\\
+\end{minipage}
+
+\vskip 2.0 cm \Large \centerline {Anno Accademico 2013-2014}
+\vfill \eject}
+
+% fine frontespizio
+
+%%% DEDICA
+%\thispagestyle{plain} \vspace*{\fill}
+%\begin{flushright}
+%\textit{``I computer sono incredibilmente veloci, accurati e stupidi.\\
+%Gli uomini sono incredibilmente lenti, inaccurati e intelligenti.\\
+%L'insieme delle due costituisce una forza incalcolabile.''}\\
+%\emph{Albert Einstein} \vfill
+%\end{flushright}
+
+%\newpage
+%\thispagestyle{plain}
+\markboth{Indice}{Indice}
+\tableofcontents
+%%\listoffigures
+%%\listoftables
+\newpage
+
+\pagenumbering{arabic}
+\input{tex_chaps/abstract.tex}
+\input{tex_chaps/capitolo0.tex}
+\input{tex_chaps/capitolo1.tex}
+\input{tex_chaps/capitolo2.tex}
+\input{tex_chaps/capitolo3.tex}
+\input{tex_chaps/capitolo4.tex}
+\input{tex_chaps/bibliografia.tex}
+
+\newpage
+\pagestyle{plain}
+
+%\input{tesi_tex/ringraziamenti.tex}
+
+\end{document}

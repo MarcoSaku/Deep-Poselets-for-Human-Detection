@@ -1,0 +1,88 @@
+\chapter{Dettagli Implementativi} \label{cap3}
+In questo capitolo sono presentati alcuni dettagli implementativi dell'approccio e vari test.
+
+\section{Dettagli implementativi}
+Per l'implementazione del software è stato utilizzato Matlab\cite{matlab}. L'implementazione della Deep Net è stata effettuata utilizzando il framework python Theano\cite{theano}: in esso sono state utilizzate le librerie di pylearn2\cite{pylearn2} per velocizzare l'operazione di convoluzione di tre volte\cite{conv-3x}. Anche se il software è stato implementato su sistema operativo Microsoft Windows 8.1, esso può funzionare anche su sistemi Unix come Mac OS e Linux a condizione che sia presente una GPU NVIDIA compatibile con CUDA\cite{cuda}, questo perché le librerie prelevate da pylearn2 funzionano solo tramite esso.\\
+Il codice e i modelli pre-trained di R-CNN possono essere scaricati dal repository GitHub: esso utilizza come framework per la creazione della CNN Caffe\cite{caffe} il quale è provvisto di funzioni wrapper per l'utilizzo in Matlab.
+Di seguito troviamo i dettagli del software utilizzato:
+
+\begin{itemize}
+\item Sistema Operativo Microsoft Windows 8.1
+\item Matlab 2013a
+\item Python 2.7.9
+\item Theano 0.7.0 (importante utilizzare questa versione o superiore)
+\item Caffe (scaricare l'ultima versione con le nuove funzioni wrapper Matlab)
+\end{itemize}
+
+Nella fase di addestramento dell'SVM, per ogni classificatore sono stati presi 700 campioni positivi (di cui 400 utilizzati come training-set) e 800 campioni negativi. I campioni sono stati presi tutti come regioni quadrate così da diminuire le distorsioni nell'operazione di ridimensionamento ad una patch di 61x61.\\
+
+Nell'utilizzo dei classificatori per l'individuazione dei bounding boxes, l'immagine viene scalata agli scale 1.2, 1, 0.8, 0.6, 0.4 e 0.2.
+
+\section{Implementazione Deep-Net}
+Come detto precedentemente, la CNN è stata implementata utilizzando il framework python Theano. Di seguito vediamo la parte di codice per l'implementazione della struttura della CNN. 
+
+\begin{lstlisting}[language=Python]
+#Build the deep-net structure using Theano Framework
+print "Building model..."
+layer0_input = x.reshape((batch_size, 3, 61, 61))
+# build symbolic expression that computes the convolution of input with filters in w
+conv_out1=MyConvnetLayer(rng,input=layer0_input,filter_shape=(64, 3, 5, 5),image_shape=(batch_size, 3, 61, 61),conv_stride=(2,2),pool_stride=(2,2),poolsize=(3,3))
+
+conv_out2=MyConvnetLayer(rng,input=conv_out1.output,filter_shape=(256,64,5,5),image_shape=(batch_size,64, 14, 14),conv_stride=(1,1))
+
+conv_out3=MyConvnetLayer(rng,input=conv_out2.output,filter_shape=(128,256,3,3),image_shape=(batch_size, 256, 10, 10),conv_stride=(1,1))
+
+conv_out4=MyConvnetLayer(rng,input=conv_out3.output,filter_shape=(128,128,3,3),image_shape=(batch_size, 128, 8, 8),conv_stride=(1,1))
+
+layer5_input = conv_out4.output.flatten(2)
+
+# construct a fully-connected sigmoidal layer
+full_5 = HiddenLayer(
+        rng,
+        input=layer5_input,
+        n_in=128 * 6 * 6,
+        n_out=256,
+        activation=T.tanh
+)
+# classify the values of the fully-connected sigmoidal layer
+full_5_softmax = LogisticRegression(input=full_5.output, n_in=256, n_out=5)
+weight_decay=1e-5
+momentum=0.9
+
+# Cost function for minibatch
+cost = T.mean(T.nnet.categorical_crossentropy(full_5_softmax.p_y_given_x,y))
+# Concatenation of the params
+params=full_5_softmax.params + full_5.params + conv_out4.params + conv_out3.params + conv_out2.params + conv_out1.params
+# create theano function to compute filtered images
+train_model = theano.function([x,y,lr],
+          [cost,full_5_softmax.p_y_given_x,full_5_softmax.y_pred,full_5_softmax.errors(y)],
+          updates= gradient_updates_momentum(cost, params, lr, momentum,weight_decay),
+          #updates=updates,
+          allow_input_downcast=True,on_unused_input='ignore'
+        )
+\end{lstlisting} 
+
+Qui viene riportata la function relativa all'aggiornamento dei parametri.
+
+\begin{lstlisting}[language=Python]
+#Weight update rule (using momentum and weightdecay)
+def gradient_updates_momentum(cost, params, learning_rate, momentum,weight_decay):
+    assert momentum < 1 and momentum >= 0
+    # List of update steps for each parameter
+    updates = []
+    # Just gradient descent on cost
+    for param in params:
+        # For each parameter, we'll create a param_update shared variable.
+        # This variable will keep track of the parameter's update step across iterations.
+        # We initialize it to 0
+        param_update = theano.shared(param.get_value()*0., broadcastable=param.broadcastable)
+        # Each parameter is updated by taking a step in the direction of the gradient.
+        # However, we also "mix in" the previous step according to the given momentum value.
+        # Note that when updating param_update, we are using its old value and also the new gradient step.
+        #updates.append((param, param - learning_rate*param_update))
+        updates.append((param, param - learning_rate*param_update - param_update*weight_decay*learning_rate))
+        # Note that we don't need to derive backpropagation to compute updates - just use T.grad!
+        updates.append((param_update, momentum*param_update + (1. - momentum)*T.grad(cost, param)))
+    return updates
+\end{lstlisting}
+
